@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🍚AMMA KAI MANAM 🫕</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fffdf8;--surface:#fff;--ink:#1d2320;--muted:#66706b;--line:#e7e2d6;--green:#1f5d45;--green-ink:#fff;--saffron:#f2a93b;--chili:#c8402b;--bot:#f1efe6;--soft:#eaf3ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="dark"]){--bg:#141a17;--surface:#1c2420;--ink:#f2f0e8;--muted:#a3ada7;--line:#2c3630;--green:#5fbf93;--green-ink:#0e1a14;--bot:#26302b;--soft:#203028}}
+:root[data-theme="light"]{--bg:#141a17;--surface:#1c2420;--ink:#f2f0e8;--muted:#a3ada7;--line:#2c3630;--green:#12a84c;--green-ink:#0e1a14;--bot:#26302b;--soft:#203028}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'DM Sans',system-ui,sans-serif}
+h1,h2,h3{font-family:'Bricolage Grotesque','DM Sans',sans-serif;margin:0;line-height:1.1}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.logo{font:800 26px 'Bricolage Grotesque',sans-serif;color:var(--green)}
+.logo i{color:var(--saffron);font-style:normal}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+.btn{border:1.5px solid var(--green);background:transparent;color:var(--green);padding:8px 16px;border-radius:999px;font-weight:700}
+.btn.solid{background:var(--green);color:var(--green-ink)}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center;padding:36px 0 28px}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:800}
+.hero p{color:var(--muted);max-width:44ch;margin:14px 0 20px}
+.search{display:flex;gap:8px;max-width:440px}
+.search input{flex:1;padding:12px 16px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit}
+.plate{background:var(--soft);border-radius:50%;aspect-ratio:1;display:grid;place-items:center;font-size:clamp(90px,18vw,170px);max-width:340px;justify-self:center;width:100%}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0 14px}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px}
+.chip.on{background:var(--saffron);border-color:var(--saffron);color:#1d2320;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;padding-bottom:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card .pic{height:110px;display:grid;place-items:center;font-size:54px;background:var(--soft)}
+.card .bd{padding:12px 14px 14px}
+.card h3{font-size:19px}
+.card small{color:var(--muted)}
+.card .row{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.add{border:0;background:var(--green);color:var(--green-ink);border-radius:999px;padding:6px 14px;font-weight:700}
+footer{border-top:1px solid var(--line);padding:22px 0 90px;color:var(--muted);font-size:14px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+
+/* chatbot */
+#fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:8px;border:0;background:var(--green);color:var(--green-ink);padding:14px 20px;border-radius:999px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+#chat{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:380px;height:min(620px,calc(100% - 36px));background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden}
+#chat.open{display:flex}
+.ch{display:flex;align-items:center;gap:10px;background:var(--green);color:var(--green-ink);padding:12px 12px 12px 14px}
+.ch .av{width:36px;height:36px;border-radius:50%;background:var(--saffron);display:grid;place-items:center;font-size:20px}
+.ch .nm{flex:1;line-height:1.2}.ch .nm b{display:block}.ch .nm span{font-size:12px;opacity:.85}
+.ch button{background:rgba(255,255,255,.18);color:inherit;border:0;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:500}
+.ch button.x{font-size:18px;line-height:1;padding:5px 10px}
+#msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.m{max-width:86%;padding:9px 13px;border-radius:14px;font-size:15px;word-wrap:break-word}
+.m.bot{background:var(--bot);border-bottom-left-radius:4px;align-self:flex-start}
+.m.me{background:var(--green);color:var(--green-ink);border-bottom-right-radius:4px;align-self:flex-end}
+.m.err{background:rgba(200,64,43,.12);border:1px solid var(--chili)}
+.m .t{display:block;font-size:11px;opacity:.6;margin-top:3px}
+.oc{margin-top:6px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;font-size:14px}
+.oc b.s{display:inline-block;background:var(--saffron);color:#1d2320;border-radius:6px;padding:0 8px;font-size:12px;margin-bottom:4px}
+.dots{display:flex;gap:4px;padding:12px 14px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:b 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--muted);border-top-color:var(--green);border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes r{to{transform:rotate(360deg)}}
+#qr{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;border-top:1px solid var(--line);max-height:132px;overflow-y:auto;background:var(--surface)}
+#qr:empty{display:none}
+#qr button{border:1.5px solid var(--green);background:transparent;color:var(--green);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+#qr button:hover{background:var(--soft)}
+#qr button.alt{border-color:var(--line);color:var(--muted)}
+.cf{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--surface)}
+.cf input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;font:inherit;background:var(--bg);color:var(--ink)}
+.cf button{border:0;background:var(--green);color:var(--green-ink);border-radius:999px;padding:0 16px;font-weight:700}
+@media (max-width:640px){.hero{grid-template-columns:1fr}.plate{max-width:200px}
+#chat{right:0;bottom:0;width:100%;height:100%;border-radius:0;border:0}}
+@media (prefers-reduced-motion:reduce){.dots i,.spin{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo">Fork<i>ful</i></div>
+    <button class="btn" onclick="openChat()">Help</button>
+  </header>
+  <section class="hero">
+    <div>
+      <h1>Hot food, at your door in 30 minutes.</h1>
+      <p>Pick a craving, add to cart, and we'll handle the rest. Stuck with an order? Tap Help any time.</p>
+      <div class="search"><input id="q" placeholder="Search dishes or restaurants" aria-label="Search"><button class="btn solid" onclick="filter()">Search</button></div>
+    </div>
+   <div class="plate" aria-hidden="true">
+    <img src="images/Tamil food.jpg" alt="Restaurant Food">
+</div>
+
+<style>
+    .plate img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 80%;
+                 }
+</style>
+</div>
+
+  </section>
+  <div class="chips" id="chips"></div>
+  <section class="grid" id="grid"></section>
+  <footer>© 🍚AMMA KAI MANAM · Need help with an order? Use the Help button in the corner. Demo order IDs: FD1001 – FD1006.</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<button id="fab" onclick="openChat()" aria-label="Open Help and Support chat">💬 Help</button>
+<section id="chat" role="dialog" aria-label="Help and Support chat">
+  <div class="ch">
+    <button id="back" onclick="act('back')" aria-label="Go back">←</button>
+    <div class="av">🍴</div>
+    <div class="nm"><b>SUVAI BOT🤖</b><span>SUVAI BOT🤖 Help &amp; Support</span></div>
+    <button onclick="act('human')">Talk to a person</button>
+    <button class="x" onclick="closeChat()" aria-label="Close chat">×</button>
+  </div>
+  <div id="msgs" aria-live="polite"></div>
+  <div id="qr"></div>
+  <div class="cf"><input id="inp" placeholder="Type your message…" autocomplete="off" aria-label="Type your message"><button onclick="send()">Send</button></div>
+</section>
+
+<script>
+/* ---------- Website ---------- */
+const FOOD=[
+ ['Spice Route','Indian · 25 min','🫓🍙🍚','North Indian','₹180'],
+ ['Noodle Bar','Chinese · 30 min','🍜🫕','Chinese','₹160'],
+ ['Biryani House','Biryani · 35 min','🍗🍛','Biryani','₹260'],
+ ['Pizza Corner','Italian · 28 min','🍕🍔🍟🌭','Pizza','₹300'],
+ ['Dosa Point','South Indian · 20 min','🥞🥐🍛','South Indian','₹120'],
+ ['Sweet Tooth','Desserts · 22 min','🍰🧁🍨🍦','Desserts','₹140']];
+let cat='All';
+function draw(list){$('#grid').innerHTML=list.map(f=>`<article class="card"><div class="pic">${f[2]}</div><div class="bd"><h3>${f[0]}</h3><small>${f[1]}</small><div class="row"><span>from ${f[4]}</span><button class="add" onclick="toast('Added from ${f[0]}')">Add</button></div></div></article>`).join('')||'<p>No matches. Try another dish.</p>'}
+function $(s){return document.querySelector(s)}
+function chips(){const c=['All',...new Set(FOOD.map(f=>f[3]))];$('#chips').innerHTML=c.map(x=>`<button class="chip ${x==cat?'on':''}" onclick="cat='${x}';chips();filter()">${x}</button>`).join('')}
+function filter(){const t=$('#q').value.toLowerCase();draw(FOOD.filter(f=>(cat=='All'||f[3]==cat)&&(f[0]+f[1]+f[3]).toLowerCase().includes(t)))}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1400)}
+chips();filter();
+
+/* ---------- Mock backend (mirrors the Django REST endpoints) ---------- */
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const LABEL={preparing:'Being prepared',out_for_delivery:'Out for delivery',delivered:'Delivered',cancelled:'Cancelled',payment_failed:'Payment failed'};
+const HISTORY=[];
+const SID=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now());
+const post=(url,body)=>fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+const API={
+ async order(id){try{const r=await fetch(`/api/order/${id}/`);return r.ok?{ok:true,data:await r.json()}:{ok:false}}catch(e){return{ok:false}}},      // GET /api/order/<id>/
+ async refund(id){try{const r=await fetch(`/api/refund/${id}/`);return r.ok?{ok:true,data:(await r.json()).refund}:{ok:false}}catch(e){return{ok:false}}}, // GET /api/refund/<id>/
+ async cancel(id,reason){try{const r=await post('/api/cancel-order/',{order_id:id,reason});return{ok:r.ok}}catch(e){return{ok:false}}},                // POST /api/cancel-order/
+ async ticket(p){try{const r=await post('/api/support-ticket/',{order_id:p.orderId,issue:p.issue,escalate:!!p.escalate,session_id:SID,transcript:HISTORY});const j=await r.json();return{ok:r.ok,ticket:j.ticket_id}}catch(e){return{ok:false,ticket:'(not saved)'}}}, // POST /api/support-ticket/
+ async chat(message){try{const r=await post('/api/chat/',{session_id:SID,message,order_id:S.orderId});return await r.json()}catch(e){return{}}}                  // POST /api/chat/
+};
+
+/* ---------- Chatbot ---------- */
+const S={orderId:null,order:null,awaiting:null,stack:['main'],misses:0,started:false};
+const MENUS={
+ main:[['📦 Order','m:order'],['🛵 Delivery','m:delivery'],['🍽️ Food / order issue','m:food'],['💳 Payment','m:payment'],['💰 Refund','m:refund'],['❌ Cancellation','m:cancel'],['🎧 Support','m:support']],
+ order:[['Track my order','track'],['Order status','status']],
+ delivery:[['Order is delayed','delay'],['Delivery partner issue','partner']],
+ food:[['Missing item','missing'],['Wrong item','wrong'],['Food quality issue','quality']],
+ payment:[['Payment failed','payfail'],['Amount deducted','deducted'],['Duplicate payment','duplicate']],
+ refund:[['Refund status','refund'],['Refund not received','norefund']],
+ cancel:[['Check cancellation','cancelcheck'],['Cancel my order','cancel']],
+ support:[['Create a support ticket','ticket'],['Talk to a person','human']]};
+const INTRO={order:'What would you like to know about your order?',delivery:'What is going wrong with the delivery?',food:'What went wrong with your food?',payment:'What happened with your payment?',refund:'What do you need to know about your refund?',cancel:'What would you like to do?',support:'How can we reach you?'};
+const KEYS=[[/track|where.*order|status/,'track'],[/late|delay|slow|not arrived|taking long/,'delay'],[/partner|rider|driver/,'partner'],[/missing|not.*receive.*item|item.*missing/,'missing'],[/wrong/,'wrong'],[/cold|stale|bad|quality|taste|spill/,'quality'],[/fail/,'payfail'],[/deduct|debited|charged/,'deducted'],[/duplicate|twice|double/,'duplicate'],[/not received|no refund|refund.*(not|where)/,'norefund'],[/refund|money back/,'refund'],[/cancel/,'cancel'],[/ticket|complain/,'ticket'],[/human|agent|person|call/,'human']];
+
+const time=()=>new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+function add(who,html,cls=''){const d=document.createElement('div');d.className='m '+who+' '+cls;d.innerHTML=html+`<span class="t">${time()}</span>`;$('#msgs').appendChild(d);$('#msgs').scrollTop=1e9;HISTORY.push({who,text:d.textContent,at:new Date().toISOString()});return d}
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function bot(html,cls){const t=document.createElement('div');t.className='m bot dots';t.innerHTML='<i></i><i></i><i></i>';$('#msgs').appendChild(t);$('#msgs').scrollTop=1e9;await wait(450);t.remove();return add('bot',html,cls)}
+function replies(list){const q=$('#qr');q.innerHTML='';list.forEach(([l,a,alt])=>{const b=document.createElement('button');b.textContent=l;if(alt)b.className='alt';b.onclick=()=>{add('me',esc(l));act(a)};q.appendChild(b)});$('#back').style.visibility=S.stack.length>1||S.awaiting?'visible':'hidden'}
+const foot=()=>[['🏠 Main menu','home',1],['Talk to a person','human',1]];
+
+function openChat(){$('#chat').classList.add('open');$('#fab').style.display='none';if(!S.started){S.started=true;menu('main',true)}setTimeout(()=>$('#inp').focus(),50)}
+function closeChat(){$('#chat').classList.remove('open');$('#fab').style.display='flex'}
+async function menu(id,first){S.awaiting=null;
+ if(first)await bot('Hi! I\'m <b>SUVAI AI</b> 👋 I can help with orders, payments, refunds and more. What do you need help with?');
+ else await bot(INTRO[id]||'What would you like help with?');
+ replies([...MENUS[id],...(id=='main'?[['Talk to a person','human',1]]:foot())])}
+
+async function act(a){
+ if(a=='back'){if(S.awaiting){S.awaiting=null;return menu(S.stack[S.stack.length-1])}if(S.stack.length>1)S.stack.pop();return menu(S.stack[S.stack.length-1])}
+ if(a=='home'){S.stack=['main'];return menu('main')}
+ if(a.startsWith('m:')){S.stack.push(a.slice(2));return menu(a.slice(2))}
+ if(a=='human')return human();
+ if(a=='newid'){S.orderId=S.order=null;S.awaiting=S.awaiting||'track';return askId()}
+ if(a.startsWith('item:'))return itemIssue(a.slice(5));
+ if(a.startsWith('yes:')){return doCancel()}
+ if(a=='no')return home('No problem, I haven\'t cancelled anything.');
+ if(a=='ticket'&&!S.order&&!S.lastIssue){S.lastIssue='General help';return makeTicket('General help request')}
+ if(a=='sendhuman'){return makeTicket('Customer asked for a human agent',true)}
+ S.flow=a;return needOrder(a)}
+
+async function home(msg){S.stack=['main'];S.awaiting=null;await bot(msg);replies([...MENUS.main,['Talk to a person','human',1]])}
+async function askId(){await bot(S.awaiting&&S.awaiting!='track'?'Sure. Please type your <b>Order ID</b> (for example <b>FD1001</b>). You can find it in your order confirmation.':'Please type your <b>Order ID</b> (for example <b>FD1001</b>). You can find it in your order confirmation.');replies([['Use FD1001','id:FD1001',1],['🏠 Main menu','home',1],['Talk to a person','human',1]].map(r=>r))}
+
+async function needOrder(flow){
+ if(flow=='ticket'){return makeTicket(S.lastIssue||'Support request')}
+ if(S.order)return run(flow,S.order);
+ S.awaiting=flow;await askId()}
+
+async function lookup(raw){
+ const id=raw.trim().toUpperCase();
+ if(!/^FD\d{4}$/.test(id)){await bot('That doesn\'t look like an Order ID. Order IDs start with <b>FD</b> followed by 4 numbers, like <b>FD1001</b>. Please try again.','err');return replies([['🏠 Main menu','home',1],['Talk to a person','human',1]])}
+ const w=add('bot','<span class="spin"></span>Checking your order…');
+ const r=await API.order(id);w.remove();HISTORY.pop();
+ if(!r.ok){S.misses++;await bot(`I couldn't find an order with ID <b>${esc(id)}</b>. Please check the ID and type it again.`,'err');return replies([['Try again','newid'],['🏠 Main menu','home',1],['Talk to a person','human',1]])}
+ S.orderId=id;S.order=r.data;const f=S.awaiting;S.awaiting=null;
+ await bot(`Found it! Order <b>${id}</b> from ${r.data.restaurant}. I'll remember this ID for our chat.`);
+ return run(f||'track',r.data)}
+
+function card(o){return `<div class="oc"><b class="s">${LABEL[o.status]}</b><br><b>${o.id}</b> · ${o.restaurant}<br>${o.items.join(', ')}<br>Total: ₹${o.total}</div>`}
+const after=(extra=[])=>replies([...extra,['Change Order ID','newid',1],['🏠 Main menu','home',1],['Talk to a person','human',1]]);
+
+async function run(f,o){
+ S.lastIssue=f;
+ const st=o.status;
+ switch(f){
+ case 'track':case 'status':
+  await bot(card(o)+(st=='preparing'?`<br>Your food is being prepared. Estimated arrival: <b>${o.eta} min</b>.`:st=='out_for_delivery'?`<br>Your order is on the way. Estimated arrival: <b>${o.eta} min</b>.`:st=='delivered'?'<br>This order was delivered. Enjoy your meal!':st=='cancelled'?'<br>This order was cancelled.':'<br>The payment did not go through, so the order was not placed.'));
+  return after([['Is it delayed?','delay']]);
+ case 'delay':
+  if(st=='out_for_delivery'||st=='preparing'){await bot(card(o)+(o.delay?`<br>Sorry about the wait. Your order is running about <b>${o.delay} min</b> late. New arrival time: <b>${o.eta} min</b>.`:`<br>Your order is on time. Arrival in about <b>${o.eta} min</b>.`));return after(o.delay?[['Delivery partner issue','partner'],['Create a support ticket','ticket']]:[])}
+  await bot(`Order ${o.id} is <b>${LABEL[st].toLowerCase()}</b>, so there is no delivery to wait for.`);return after();
+ case 'partner':
+  if(o.partner){await bot(`Your delivery partner is <b>${o.partner.name}</b>. You can call: <b>${o.partner.phone}</b>.<br>If you can't reach them, I can raise a ticket.`);return after([['Create a support ticket','ticket']])}
+  await bot('A delivery partner has not been assigned yet, or the order is already closed.');return after();
+ case 'missing':case 'wrong':
+  if(st!='delivered'){await bot(`Order ${o.id} hasn't been delivered yet (${LABEL[st].toLowerCase()}). Please report this after it arrives.`);return after()}
+  S.awaiting='item';await bot(`Sorry about that! Which item ${f=='missing'?'is missing':'was wrong'}?`);
+  return replies([...o.items.map(i=>[i,'item:'+i]),['Something else','item:Other'],['🏠 Main menu','home',1],['Talk to a person','human',1]]);
+ case 'quality':
+  S.awaiting='item';await bot('I\'m sorry the food wasn\'t good. What went wrong? Tap the closest match or type it.');
+  return replies([['Cold food','item:Cold food'],['Spilled','item:Spilled'],['Bad taste','item:Bad taste'],['Other','item:Other'],['🏠 Main menu','home',1]]);
+ case 'payfail':case 'deducted':case 'duplicate':{
+  const m={paid:'Your payment for this order went through once and looks fine. No extra charge found.',deducted:'Your payment failed but money was deducted. Don\'t worry: a refund of <b>₹'+o.total+'</b> has been started.',duplicate:'You were charged twice for this order. The extra <b>₹'+o.total+'</b> is being refunded.'};
+  await bot(card(o)+'<br>'+(m[o.pay]));if(o.refund)await bot(`Refund: <b>${o.refund.state}</b>. It should reach you in <b>${o.refund.when}</b>.`);
+  return after(o.pay=='paid'?[['Create a support ticket','ticket']]:[['Refund not received','norefund']])}
+ case 'refund':case 'norefund':{
+  const w=add('bot','<span class="spin"></span>Checking refund…');const r=await API.refund(S.orderId);w.remove();HISTORY.pop();
+  if(!r.data){await bot(`Order ${o.id} has no refund on record. Refunds start when an order is cancelled or a payment problem is found.`);return after([['Create a support ticket','ticket']])}
+  await bot(`Refund of <b>₹${r.data.amount}</b> is <b>${r.data.state}</b>. Expected in <b>${r.data.when}</b> in your original payment method.`+(f=='norefund'?'<br>If it doesn\'t arrive after this time, I can raise a ticket for you.':''));
+  return after([['Create a support ticket','ticket']])}
+ case 'cancelcheck':
+  await bot(st=='cancelled'?`Order ${o.id} <b>is cancelled</b>.`+(o.refund?` Refund: ${o.refund.state}.`:''):`Order ${o.id} is <b>not cancelled</b> (${LABEL[st].toLowerCase()}).`);return after(o.cancellable?[['Cancel my order','cancel']]:[]);
+ case 'cancel':
+  if(!o.cancellable){await bot(st=='cancelled'?'This order is already cancelled.':`Sorry, order ${o.id} can't be cancelled now because it is ${LABEL[st].toLowerCase()}. I can raise a ticket if you'd like.`,'err');return after([['Create a support ticket','ticket']])}
+  await bot(card(o)+'<br>Do you really want to cancel this order? Your money will be refunded.');return replies([['Yes, cancel it','yes:1'],['No, keep it','no']])}
+}
+async function doCancel(){const w=add('bot','<span class="spin"></span>Cancelling…');const r=await API.cancel(S.orderId,'Customer request');w.remove();HISTORY.pop();
+ if(!r.ok){await bot('Sorry, we couldn\'t cancel it. Please try again or talk to a person.','err');return after()}
+ S.order=null;
+ await bot(`Done. Order <b>${S.orderId}</b> is cancelled. Your refund will arrive in 3–5 working days.`);return after()}
+async function itemIssue(item){S.awaiting=null;await makeTicket(`${S.flow||'Food issue'}: ${item}`,false,'We\'ll arrange a refund or replacement.')}
+async function makeTicket(issue,escalate,extra=''){
+ const w=add('bot','<span class="spin"></span>Creating your ticket…');
+ const r=await API.ticket({orderId:S.orderId,issue,escalate});w.remove();HISTORY.pop();
+ await bot(`Your ticket <b>${r.ticket}</b> is created${S.orderId?` for order ${S.orderId}`:''}. ${extra} Our team will reply within 30 minutes, and they can see this chat so you won't need to repeat yourself.`);
+ S.lastIssue=null;S.awaiting=null;return after()}
+async function human(){await bot('I\'m sorry I couldn\'t fully solve this. I can connect you to a support agent and share this chat with them. Shall I?');replies([['Yes, connect me','sendhuman'],['No, go back','home',1]])}
+
+async function send(){const i=$('#inp'),v=i.value.trim();if(!v)return;i.value='';add('me',esc(v));$('#qr').innerHTML='';
+ const c=await API.chat(v);
+ const idm=v.match(/\bfd\s?\d{4}\b/i);
+ if(S.awaiting&&S.awaiting!='item')return lookup(idm?idm[0].replace(/\s/g,''):v);
+ if(S.awaiting=='item')return itemIssue(v);
+ if(idm){S.awaiting=S.flow||'track';return lookup(idm[0].replace(/\s/g,''))}
+ const t=v.toLowerCase();if(/^(hi|hello|hey)\b/.test(t))return home('Hello! What can I help you with?');
+ const it=c.intent||(KEYS.find(k=>k[0].test(t))||[])[1];if(it){S.misses=0;return act(it)}
+ S.misses++;await bot('Sorry, I didn\'t get that. Please pick one of these options.');
+ replies([...MENUS.main,...(S.misses>=2?[['Talk to a person','human']]:[['Talk to a person','human',1]])])}
+$('#inp').addEventListener('keydown',e=>{if(e.key=='Enter')send()});
+/* quick "Use FD1001" button */
+const _act=act;act=async function(a){if(a.startsWith('id:'))return lookup(a.slice(3));return _act(a)};
+</script>
+</body>
+</html>
